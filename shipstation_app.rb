@@ -121,6 +121,7 @@ class ShipStationApp < EndpointBase::Sinatra::Base
 
       add_object :shipment, {
         id: shipment["orderNumber"],
+        order_id: shipment["orderNumber"],
         tracking: shipment["trackingNumber"],
         shipstation_id: shipment["shipmentId"],
         status: "shipped",
