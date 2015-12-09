@@ -100,7 +100,7 @@ class ShipStationApp < EndpointBase::Sinatra::Base
   post '/get_shipments' do
     current_page = (@config['page'] || 1).to_i
 
-    query_string = "page=#{current_page}&pageSize=500&shipdatestart=#{since_date}"
+    query_string = "orderNumber=S&page=#{current_page}&pageSize=500&shipdatestart=#{since_date}"
 
     response = ShipstationClient.request :get, "Shipments/List?#{query_string}", headers: ship_headers
 
@@ -326,13 +326,7 @@ class ShipStationApp < EndpointBase::Sinatra::Base
   end
 
   def ship_headers
-    # the parameter authorization is for old customers - legacy support (Mashape)
-    # new customers should use key & secret
-    if !@config[:key].to_s.empty? && !@config[:secret].to_s.empty?
-      authorization = Base64.strict_encode64("#{@config[:key]}:#{@config[:secret]}")
-    else
-      authorization = @config[:authorization]
-    end
+    authorization = Base64.strict_encode64("#{@config[:key]}:#{@config[:secret]}")
 
     headers = { 'Authorization' => "Basic #{authorization}" }
 
