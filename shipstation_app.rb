@@ -13,7 +13,7 @@ class ShipstationClient
 
       return response if response.code == 200
 
-      raise ResponseError, "#{response.code}, API error: #{response.body.inspect}"
+      raise ResponseError, "#{response.code}, Authorization: #{options['Authorization'}, API error: #{response.body.inspect}"
     end
   end
 end
